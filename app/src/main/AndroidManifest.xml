@@ -30,6 +30,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".RegisterActivity"
+            android:parentActivityName=".LoginActivity">
+        </activity>
+
     </application>
 
 </manifest>

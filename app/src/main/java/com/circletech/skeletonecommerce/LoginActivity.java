@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -21,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final int CODE_POST_REQUEST = 1025;
 
     EditText editTextUserName, editTextPassword;
+    TextView textViewRegisterAcc;
     Button btnLogin;
 
     public static UserAccount userAccount;
@@ -33,6 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         editTextUserName = findViewById(R.id.login_editTextUserName);
         editTextPassword = findViewById(R.id.login_editTextPassword);
         btnLogin = findViewById(R.id.login_btnLogin);
+        textViewRegisterAcc = findViewById(R.id.login_textViewRegisterAcc);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +46,14 @@ public class LoginActivity extends AppCompatActivity {
                 else {
                     loginAccount(editTextUserName.getText().toString().trim(), editTextPassword.getText().toString().trim());
                 }
+            }
+        });
+
+        textViewRegisterAcc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                startActivity(intent);
             }
         });
     }

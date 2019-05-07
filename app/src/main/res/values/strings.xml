@@ -14,4 +14,6 @@
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
     <string name="title_activity_list">activity_list</string>
+    <string name="menu_listing_item">Listing Item</string>
+    <string name="menu_add_item">Add Item</string>
 </resources>

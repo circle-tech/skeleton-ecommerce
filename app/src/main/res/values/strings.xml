@@ -16,4 +16,5 @@
     <string name="title_activity_list">activity_list</string>
     <string name="menu_listing_item">Listing Item</string>
     <string name="menu_add_item">Add Item</string>
+    <string name="reg_btnRegister">Register</string>
 </resources>

@@ -15,9 +15,13 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    TextView userName;
+    TextView email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,13 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.getHeaderView(0);
+        userName = headerView.findViewById(R.id.nav_header_userName);
+        userName.setText(LoginActivity.getUserAccount().getUserName());
+
+        email = headerView.findViewById(R.id.nav_header_email);
+        email.setText(LoginActivity.getUserAccount().getEmail());
 
         displaySelectedScreen(R.id.nav_listingitem);
     }

@@ -18,4 +18,6 @@
     <string name="menu_add_item">Add Item</string>
     <string name="reg_btnRegister">Register</string>
     <string name="listing_text">Fragment Placeholder</string>
+
+    <string name="fragment_listing_productlist_quantityleft">Quantity Left: %1$d</string>
 </resources>

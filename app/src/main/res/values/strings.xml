@@ -20,4 +20,6 @@
     <string name="listing_text">Fragment Placeholder</string>
 
     <string name="fragment_listing_productlist_quantityleft">Quantity Left: %1$d</string>
+    <string name="menu_logout">Log Out</string>
+    <string name="menu_settings">Settings</string>
 </resources>

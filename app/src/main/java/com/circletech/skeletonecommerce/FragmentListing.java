@@ -113,7 +113,7 @@ public class FragmentListing extends Fragment {
     }
 
     public void getProducts() {
-        FragmentListing.PerformNetworkRequest request = new FragmentListing.PerformNetworkRequest(API.URL_GET_PRODUCSTS, null, CODE_GET_REQUEST);
+        FragmentListing.PerformNetworkRequest request = new FragmentListing.PerformNetworkRequest(API.URL_GET_PRODUCTS, null, CODE_GET_REQUEST);
         request.execute();
     }
 }

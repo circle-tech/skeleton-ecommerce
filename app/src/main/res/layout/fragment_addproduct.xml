@@ -17,7 +17,7 @@
             android:text="Product Name" />
 
         <EditText
-            android:id="@+id/register_editTextProductName"
+            android:id="@+id/fragment_additem_editTextProductName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp" />
@@ -28,7 +28,7 @@
             android:text="Product Description" />
 
         <EditText
-            android:id="@+id/register_editTextProductDescription"
+            android:id="@+id/fragment_additem_editTextProductDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp" />
@@ -39,11 +39,11 @@
             android:text="Price" />
 
         <EditText
-            android:id="@+id/register_editTextPrice"
+            android:id="@+id/fragment_additem_editTextPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-             />
+            android:inputType="numberDecimal" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -51,17 +51,17 @@
             android:text="Product Quantity" />
 
         <EditText
-            android:id="@+id/register_editTextConfirmPassword"
+            android:id="@+id/fragment_additem_editTextProductQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-             />
+            android:inputType="number" />
 
         <Button
-            android:id="@+id/register_btnRegister"
+            android:id="@+id/fragment_additem_btnAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add" />
+            android:text="@string/fragment_addproduct_btnAdd" />
 
     </LinearLayout>
 

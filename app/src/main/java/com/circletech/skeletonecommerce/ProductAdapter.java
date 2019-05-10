@@ -33,7 +33,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(ProductViewHolder holder, int position) {
         Product product = productList.get(position);
         String stringProductQuantity = "Quantity Left: " + product.getProductQuantity();
-        String stringProductPrice = "RM " + product.getProductPrice();
+        String stringProductPrice = "RM " + product.getProductPrice();      //TODO: Make it prints out price in 2 decimal places.
 
         Glide.with(mCtx)
                 .load(product.getProductImage())

@@ -6,4 +6,5 @@ public class API {
     public static final String URL_LOGIN_ACCOUNT = ROOT_URL + "loginacc";
     public static final String URL_REGISTER_ACCOUNT = ROOT_URL + "registeracc";
     public static final String URL_GET_PRODUCTS = ROOT_URL + "getproducts";
+    public static final String URL_ADD_PRODUCT = ROOT_URL + "addproduct";
 }

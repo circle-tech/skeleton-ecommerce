@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity
         if (itemId == R.id.nav_listingitem) {
             fragment = new FragmentListing();
         } else if (itemId == R.id.nav_additem) {
-            fragment = new FragmentAddItem();
+            fragment = new FragmentAddProduct();
         }
 
         if (fragment != null) {

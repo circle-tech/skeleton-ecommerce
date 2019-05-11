@@ -41,6 +41,14 @@
             android:text="Register an Account"
             android:layout_marginTop="10dp"/>
 
+        <ProgressBar
+            android:id="@+id/login_progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"/>
+
     </LinearLayout>
 
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,8 @@ public class LoginActivity extends AppCompatActivity {
     TextView textViewRegisterAcc;
     Button btnLogin;
 
+    ProgressBar progressBar;
+
     public static UserAccount userAccount;
 
     @Override
@@ -36,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.login_editTextPassword);
         btnLogin = findViewById(R.id.login_btnLogin);
         textViewRegisterAcc = findViewById(R.id.login_textViewRegisterAcc);
+        progressBar = findViewById(R.id.login_progressBar);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -93,6 +98,7 @@ public class LoginActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            progressBar.setVisibility(View.INVISIBLE);
         }
 
         @Override

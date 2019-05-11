@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -24,6 +25,8 @@ public class FragmentAddProduct extends Fragment {
     EditText editTextProductName, editTextProductDescription, editTextProductPrice, editTextProductQuantity;
     Button btnAdd;
 
+    ProgressBar progressBar;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class FragmentAddProduct extends Fragment {
         editTextProductPrice = view.findViewById(R.id.fragment_additem_editTextPrice);
         editTextProductQuantity = view.findViewById(R.id.fragment_additem_editTextProductQuantity);
         btnAdd = view.findViewById(R.id.fragment_additem_btnAdd);
+        progressBar = view.findViewById(R.id.fragment_additem_progressBar);
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +72,7 @@ public class FragmentAddProduct extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -84,6 +89,7 @@ public class FragmentAddProduct extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+            progressBar.setVisibility(View.INVISIBLE);
         }
 
         @Override

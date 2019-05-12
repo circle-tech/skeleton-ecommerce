@@ -32,8 +32,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
         Product product = productList.get(position);
-        String stringProductQuantity = "Quantity Left: " + product.getProductQuantity();
-        String stringProductPrice = "RM " + product.getProductPrice();      //TODO: Make it prints out price in 2 decimal places.
 
         Glide.with(mCtx)
                 .load(product.getProductImage())
@@ -41,9 +39,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         holder.textViewProductName.setText(product.getProductName());
         holder.textViewProductDescription.setText(product.getProductDescription());
-        //holder.textViewProductQuantity.setText(mCtx.getResources().getString(R.string.fragment_listing_productlist_quantityleft, product.getProductQuantity()));
-        holder.textViewProductQuantity.setText(stringProductQuantity);      //TODO: Android gives warning here. Need to find a way to clean the warning.
-        holder.textViewProductPrice.setText(stringProductPrice);            //TODO: Same goes to this code.
+        holder.textViewProductQuantity.setText(mCtx.getResources().getString(R.string.fragment_listing_productlist_quantityleft, product.getProductQuantity()));
+        holder.textViewProductPrice.setText(mCtx.getResources().getString(R.string.fragment_listing_productlist_price, product.getProductPrice()));
     }
 
     @Override

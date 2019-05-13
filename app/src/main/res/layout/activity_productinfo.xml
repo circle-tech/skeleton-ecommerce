@@ -1,12 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/activity_productinfo_textViewProductId"
+    <ProgressBar
+        android:id="@+id/activity_productinfo_progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+
+    <RelativeLayout
+        android:id="@+id/activity_productinfo_relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Product ID"
-        android:gravity="center"/>
-</android.support.constraint.ConstraintLayout>
+        android:layout_margin="5dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/activity_productinfo_imageViewProductImage"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:padding="4dp" />
+
+        <TextView
+            android:id="@+id/activity_productinfo_textViewProductName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_below="@id/activity_productinfo_imageViewProductImage"
+            android:text="Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra)"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/activity_productinfo_textViewProductDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/activity_productinfo_textViewProductName"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="13.3 Inch, 256 GB"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+        <TextView
+            android:id="@+id/activity_productinfo_textViewProductQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/activity_productinfo_textViewProductDescription"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="Quantity Left: 10"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+        <TextView
+            android:id="@+id/activity_productinfo_textViewProductPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/activity_productinfo_textViewProductQuantity"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="RM 100.00"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textStyle="bold" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/activity_productinfo_textViewProductPrice"
+            android:text="Buy"/>
+
+        <TextView
+            android:id="@+id/activity_productinfo_textViewProductId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Product ID"
+            android:visibility="gone"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

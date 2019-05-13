@@ -1,6 +1,5 @@
 package com.circletech.skeletonecommerce;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -28,12 +28,15 @@ public class FragmentListing extends Fragment {
     List<Product> productList;
 
     RecyclerView recyclerView;
+    ProgressBar progressBar;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_listing, container, false);
         recyclerView = view.findViewById(R.id.fragment_listing_RecyclerView);
+        progressBar = view.findViewById(R.id.fragment_listing_ProgressBar);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -45,7 +48,7 @@ public class FragmentListing extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle("Listing Items");
+        getActivity().setTitle("Home");
     }
 
     private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
@@ -89,6 +92,9 @@ public class FragmentListing extends Fragment {
 
                     ProductAdapter productAdapter = new ProductAdapter(getActivity(), productList);
                     recyclerView.setAdapter(productAdapter);
+
+                    progressBar.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
                 }
                 else {
                     Toast.makeText(getActivity(), object.getString("message"), Toast.LENGTH_SHORT).show();

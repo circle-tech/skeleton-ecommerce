@@ -7,9 +7,9 @@
         android:id="@+id/menu_top"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_listingitem"
+            android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_home"
-            android:title="@string/menu_listing_item" />
+            android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_additem"
             android:icon="@android:drawable/ic_menu_add"

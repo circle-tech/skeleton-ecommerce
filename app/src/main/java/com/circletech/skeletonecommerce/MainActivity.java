@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity
         email = headerView.findViewById(R.id.nav_header_email);
         email.setText(LoginActivity.getUserAccount().getEmail());
 
-        displaySelectedScreen(R.id.nav_listingitem);
+        displaySelectedScreen(R.id.nav_home);
     }
 
     @Override
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity
 
         Fragment fragment = null;
 
-        if (itemId == R.id.nav_listingitem) {
+        if (itemId == R.id.nav_home) {
             fragment = new FragmentListing();
         } else if (itemId == R.id.nav_additem) {
             fragment = new FragmentAddProduct();

@@ -1,6 +1,7 @@
 package com.circletech.skeletonecommerce;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 .load(product.getProductImage())
                 .into(holder.imageViewProductImage);
 
+        holder.textViewProductId.setText(String.valueOf(product.getProductId()));
         holder.textViewProductName.setText(product.getProductName());
         holder.textViewProductDescription.setText(product.getProductDescription());
         holder.textViewProductQuantity.setText(mCtx.getResources().getString(R.string.fragment_listing_productlist_quantityleft, product.getProductQuantity()));
@@ -50,17 +52,28 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewProductName, textViewProductDescription, textViewProductQuantity, textViewProductPrice;
+        TextView textViewProductId, textViewProductName, textViewProductDescription, textViewProductQuantity, textViewProductPrice;
         ImageView imageViewProductImage;
 
-        public ProductViewHolder(View itemView) {
+        public ProductViewHolder(final View itemView) {
             super(itemView);
 
-            textViewProductName = itemView.findViewById(R.id.textView_ProductName);
-            textViewProductDescription = itemView.findViewById(R.id.textView_ProductDescription);
-            textViewProductQuantity = itemView.findViewById(R.id.textView_ProductQuantity);
-            textViewProductPrice = itemView.findViewById(R.id.textView_ProductPrice);
-            imageViewProductImage = itemView.findViewById(R.id.imageView_ProductImage);
+            textViewProductId = itemView.findViewById(R.id.fragment_listing_productlist_textViewProductId);
+            textViewProductName = itemView.findViewById(R.id.fragment_listing_productlist_textViewProductName);
+            textViewProductDescription = itemView.findViewById(R.id.fragment_listing_productlist_textViewProductDescription);
+            textViewProductQuantity = itemView.findViewById(R.id.fragment_listing_productlist_textViewProductQuantity);
+            textViewProductPrice = itemView.findViewById(R.id.fragment_listing_productlist_textViewProductPrice);
+            imageViewProductImage = itemView.findViewById(R.id.fragment_listing_productlist_imageViewProductImage);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mCtx.getApplicationContext(), ProductInfoActivity.class);
+                    intent.putExtra("PRODUCT_ID", textViewProductId.getText().toString());
+
+                    mCtx.startActivity(intent);
+                }
+            });
         }
     }
 }

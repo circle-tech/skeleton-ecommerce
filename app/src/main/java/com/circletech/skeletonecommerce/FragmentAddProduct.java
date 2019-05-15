@@ -33,12 +33,12 @@ public class FragmentAddProduct extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_addproduct, container, false);
-        editTextProductName = view.findViewById(R.id.fragment_additem_editTextProductName);
-        editTextProductDescription = view.findViewById(R.id.fragment_additem_editTextProductDescription);
-        editTextProductPrice = view.findViewById(R.id.fragment_additem_editTextPrice);
-        editTextProductQuantity = view.findViewById(R.id.fragment_additem_editTextProductQuantity);
-        btnAdd = view.findViewById(R.id.fragment_additem_btnAdd);
-        progressBar = view.findViewById(R.id.fragment_additem_progressBar);
+        editTextProductName = view.findViewById(R.id.fragment_addproduct_editTextProductName);
+        editTextProductDescription = view.findViewById(R.id.fragment_addproduct_editTextProductDescription);
+        editTextProductPrice = view.findViewById(R.id.fragment_addproduct_editTextPrice);
+        editTextProductQuantity = view.findViewById(R.id.fragment_addproduct_editTextProductQuantity);
+        btnAdd = view.findViewById(R.id.fragment_addproduct_btnAdd);
+        progressBar = view.findViewById(R.id.fragment_addproduct_progressBar);
 
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override

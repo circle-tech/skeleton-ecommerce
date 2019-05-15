@@ -17,8 +17,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.TextView;
 
+import java.util.HashMap;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    Session userSession;
 
     TextView userName;
     TextView email;
@@ -27,6 +31,12 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        userSession = new Session(getApplicationContext());
+        userSession.checkLogin();
+
+        HashMap<String, String> userDetails = userSession.getUserDetails();
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -47,10 +57,10 @@ public class MainActivity extends AppCompatActivity
 
         View headerView = navigationView.getHeaderView(0);
         userName = headerView.findViewById(R.id.nav_header_userName);
-        userName.setText(LoginActivity.getUserAccount().getUserName());
+        userName.setText(userDetails.get(Session.KEY_USERNAME));
 
         email = headerView.findViewById(R.id.nav_header_email);
-        email.setText(LoginActivity.getUserAccount().getEmail());
+        email.setText(userDetails.get(Session.KEY_EMAIL));
 
         displaySelectedScreen(R.id.nav_home);
     }
@@ -100,8 +110,12 @@ public class MainActivity extends AppCompatActivity
 
         if (itemId == R.id.nav_home) {
             fragment = new FragmentListing();
-        } else if (itemId == R.id.nav_additem) {
+        }
+        else if (itemId == R.id.nav_additem) {
             fragment = new FragmentAddProduct();
+        }
+        else if (itemId == R.id.nav_logout) {
+            userSession.logOutUser();
         }
 
         if (fragment != null) {

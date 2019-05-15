@@ -22,18 +22,20 @@ public class LoginActivity extends AppCompatActivity {
     private static final int CODE_GET_REQUEST = 1024;
     private static final int CODE_POST_REQUEST = 1025;
 
+    Session userSession;
+
     EditText editTextUserName, editTextPassword;
     TextView textViewRegisterAcc;
     Button btnLogin;
 
     ProgressBar progressBar;
 
-    public static UserAccount userAccount;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        userSession = new Session(getApplicationContext());
 
         editTextUserName = findViewById(R.id.login_editTextUserName);
         editTextPassword = findViewById(R.id.login_editTextPassword);
@@ -86,7 +88,9 @@ public class LoginActivity extends AppCompatActivity {
                 JSONObject object = new JSONObject(s);
                 if (!object.getBoolean("error")) {
                     Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
-                    setAccountInfo(object.getJSONArray("account"));
+
+                    JSONObject obj = object.getJSONArray("account").getJSONObject(0);
+                    userSession.createLoginSession(obj.getString("userName"), obj.getString("email"));
 
                     Intent i = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(i);
@@ -123,17 +127,5 @@ public class LoginActivity extends AppCompatActivity {
 
         PerformNetworkRequest request = new PerformNetworkRequest(API.URL_LOGIN_ACCOUNT, params, CODE_POST_REQUEST);
         request.execute();
-    }
-
-    private void setAccountInfo(JSONArray account) throws JSONException {
-        JSONObject obj = account.getJSONObject(0);
-        userAccount = new UserAccount(
-                obj.getString("userName"),
-                obj.getString("email")
-        );
-    }
-
-    public static UserAccount getUserAccount() {
-        return userAccount;
     }
 }

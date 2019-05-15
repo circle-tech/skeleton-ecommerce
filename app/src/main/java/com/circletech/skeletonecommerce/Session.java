@@ -51,7 +51,7 @@ public class Session {
 
     public HashMap<String, String> getUserDetails() {
 
-        HashMap<String, String> user = new HashMap<String, String>();
+        HashMap<String, String> user = new HashMap<>();
         user.put(KEY_USERNAME, sharedPreferences.getString(KEY_USERNAME, null));
         user.put(KEY_EMAIL, sharedPreferences.getString(KEY_EMAIL, null));
 

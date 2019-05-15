@@ -2,6 +2,7 @@ package com.circletech.skeletonecommerce;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class FragmentListing extends Fragment {
 
@@ -32,7 +34,7 @@ public class FragmentListing extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_listing, container, false);
         recyclerView = view.findViewById(R.id.fragment_listing_RecyclerView);
         progressBar = view.findViewById(R.id.fragment_listing_ProgressBar);
@@ -46,9 +48,9 @@ public class FragmentListing extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle("Home");
+        Objects.requireNonNull(getActivity()).setTitle("Home");
     }
 
     private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
@@ -60,11 +62,6 @@ public class FragmentListing extends Fragment {
             this.url = url;
             this.params = params;
             this.requestCode = requestCode;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
         }
 
         @Override

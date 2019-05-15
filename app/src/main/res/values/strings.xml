@@ -8,16 +8,8 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
-    <string name="menu_tools">Tools</string>
-    <string name="menu_share">Share</string>
-    <string name="menu_send">Send</string>
-    <string name="title_activity_list">activity_list</string>
-    <string name="menu_listing_item">Listing Item</string>
     <string name="menu_add_item">Add Item</string>
     <string name="reg_btnRegister">Register</string>
-    <string name="listing_text">Fragment Placeholder</string>
 
     <string name="fragment_listing_productlist_quantityleft">Quantity Left: %1$d</string>
     <string name="fragment_listing_productlist_price">RM %1$.2f</string>
@@ -28,4 +20,6 @@
 
     <string name="activity_productinfo_productprice">RM %1.2f</string>
     <string name="activity_productinfo_productquantity">Quantity Left: %1$d</string>
+    <string name="activity_productinfo_imageview_contentdesc">Product Image</string>
+    <string name="fragment_listing_productlist_imageview_contentdesc">Product Image</string>
 </resources>

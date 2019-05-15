@@ -1,75 +1,73 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_height="match_parent"
+    android:layout_width="match_parent"
     android:padding="10dp"
-    android:layout_width="match_parent">
+    android:gravity="center_vertical">
 
-    <LinearLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product Name"
+        android:labelFor="@+id/fragment_additem_editTextProductName"/>
+
+    <EditText
+        android:id="@+id/fragment_additem_editTextProductName"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:inputType="text"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Product Name" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product Description"
+        android:labelFor="@+id/fragment_additem_editTextProductDescription"/>
 
-        <EditText
-            android:id="@+id/fragment_additem_editTextProductName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp" />
+    <EditText
+        android:id="@+id/fragment_additem_editTextProductDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:inputType="text"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Product Description" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Price"
+        android:labelFor="@+id/fragment_additem_editTextPrice"/>
 
-        <EditText
-            android:id="@+id/fragment_additem_editTextProductDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp" />
+    <EditText
+        android:id="@+id/fragment_additem_editTextPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:inputType="numberDecimal" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Price" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product Quantity"
+        android:labelFor="@+id/fragment_additem_editTextProductQuantity"/>
 
-        <EditText
-            android:id="@+id/fragment_additem_editTextPrice"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:inputType="numberDecimal" />
+    <EditText
+        android:id="@+id/fragment_additem_editTextProductQuantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:inputType="number" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Product Quantity" />
+    <Button
+        android:id="@+id/fragment_additem_btnAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/fragment_addproduct_btnAdd" />
 
-        <EditText
-            android:id="@+id/fragment_additem_editTextProductQuantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:inputType="number" />
-
-        <Button
-            android:id="@+id/fragment_additem_btnAdd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/fragment_addproduct_btnAdd" />
-
-        <ProgressBar
-            android:id="@+id/fragment_additem_progressBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:visibility="gone"/>
-
-    </LinearLayout>
+    <ProgressBar
+        android:id="@+id/fragment_additem_progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:visibility="gone"/>
 
 </LinearLayout>

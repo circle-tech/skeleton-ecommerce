@@ -13,15 +13,16 @@
             android:id="@+id/fragment_listing_productlist_imageViewProductImage"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:contentDescription="@string/fragment_listing_productlist_imageview_contentdesc" />
 
         <TextView
             android:id="@+id/fragment_listing_productlist_textViewProductName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/fragment_listing_productlist_imageViewProductImage"
-            android:text="Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra)"
+            android:layout_marginStart="5dp"
+            android:layout_toEndOf="@id/fragment_listing_productlist_imageViewProductImage"
+            android:text="Product Name"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
             android:textColor="#000000" />
 
@@ -30,10 +31,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/fragment_listing_productlist_textViewProductName"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:layout_toRightOf="@id/fragment_listing_productlist_imageViewProductImage"
-            android:text="13.3 Inch, 256 GB"
+            android:layout_toEndOf="@id/fragment_listing_productlist_imageViewProductImage"
+            android:text="Product Description"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
         <TextView
@@ -41,9 +42,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/fragment_listing_productlist_textViewProductDescription"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:layout_toRightOf="@id/fragment_listing_productlist_imageViewProductImage"
+            android:layout_toEndOf="@id/fragment_listing_productlist_imageViewProductImage"
             android:text="Quantity Left: 10"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
 
@@ -52,9 +53,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/fragment_listing_productlist_textViewProductQuantity"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:layout_toRightOf="@id/fragment_listing_productlist_imageViewProductImage"
+            android:layout_toEndOf="@id/fragment_listing_productlist_imageViewProductImage"
             android:text="RM 100.00"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
             android:textStyle="bold" />
@@ -63,7 +64,6 @@
             android:id="@+id/fragment_listing_productlist_textViewProductId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Product ID"
             android:visibility="gone"/>
 
     </RelativeLayout>

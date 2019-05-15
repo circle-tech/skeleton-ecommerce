@@ -72,11 +72,6 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             try {

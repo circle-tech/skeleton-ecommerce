@@ -22,13 +22,14 @@
             android:id="@+id/activity_productinfo_imageViewProductImage"
             android:layout_width="match_parent"
             android:layout_height="300dp"
-            android:padding="4dp" />
+            android:padding="4dp"
+            android:contentDescription="@string/activity_productinfo_imageview_contentdesc"/>
 
         <TextView
             android:id="@+id/activity_productinfo_textViewProductName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_below="@id/activity_productinfo_imageViewProductImage"
             android:text="Apple MacBook Air Core i5 5th Gen - (8 GB/128 GB SSD/Mac OS Sierra)"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
@@ -39,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/activity_productinfo_textViewProductName"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:text="13.3 Inch, 256 GB"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
@@ -49,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/activity_productinfo_textViewProductDescription"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:text="Quantity Left: 10"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
@@ -59,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/activity_productinfo_textViewProductQuantity"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:text="RM 100.00"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"

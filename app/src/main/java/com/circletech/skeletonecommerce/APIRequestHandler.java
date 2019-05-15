@@ -9,6 +9,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +32,7 @@ public class APIRequestHandler {
 
             OutputStream os = conn.getOutputStream();
 
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, StandardCharsets.UTF_8));
             writer.write(getPostDataString(postDataParams));
             writer.flush();
             writer.close();
@@ -62,7 +63,7 @@ public class APIRequestHandler {
 
             String s;
             while ((s = bufferedReader.readLine()) != null) {
-                sb.append(s + "\n");
+                sb.append(s).append("\n");
             }
         } catch (Exception e) {
             e.printStackTrace();

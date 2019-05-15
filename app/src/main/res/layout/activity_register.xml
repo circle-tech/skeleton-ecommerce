@@ -1,68 +1,66 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_height="match_parent"
+    android:layout_width="match_parent"
     android:padding="10dp"
-    android:layout_width="match_parent">
+    android:gravity="center_vertical">
 
-    <LinearLayout
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User Name"
+        android:labelFor="@+id/register_editTextUserName"/>
+
+    <EditText
+        android:id="@+id/register_editTextUserName"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:inputType="text"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="User Name" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:labelFor="@+id/register_editTextEmail"/>
 
-        <EditText
-            android:id="@+id/register_editTextUserName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp" />
+    <EditText
+        android:id="@+id/register_editTextEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:inputType="textEmailAddress"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Email" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:labelFor="@+id/register_editTextPassword"/>
 
-        <EditText
-            android:id="@+id/register_editTextEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp" />
+    <EditText
+        android:id="@+id/register_editTextPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:inputType="textPassword" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Password" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm Password"
+        android:labelFor="@+id/register_editTextConfirmPassword"/>
 
-        <EditText
-            android:id="@+id/register_editTextPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:inputType="textPassword" />
+    <EditText
+        android:id="@+id/register_editTextConfirmPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:inputType="textPassword" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Confirm Password" />
-
-        <EditText
-            android:id="@+id/register_editTextConfirmPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:inputType="textPassword" />
-
-        <Button
-            android:id="@+id/register_btnRegister"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/reg_btnRegister" />
-
-    </LinearLayout>
+    <Button
+        android:id="@+id/register_btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/reg_btnRegister" />
 
 </LinearLayout>

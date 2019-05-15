@@ -2,6 +2,7 @@ package com.circletech.skeletonecommerce;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class FragmentAddProduct extends Fragment {
 
@@ -29,7 +31,7 @@ public class FragmentAddProduct extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_addproduct, container, false);
         editTextProductName = view.findViewById(R.id.fragment_additem_editTextProductName);
         editTextProductDescription = view.findViewById(R.id.fragment_additem_editTextProductDescription);
@@ -53,9 +55,9 @@ public class FragmentAddProduct extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getActivity().setTitle("Add New Product");
+        Objects.requireNonNull(getActivity()).setTitle("Add New Product");
     }
 
     private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {

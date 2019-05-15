@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class UserAccount implements Serializable {
 
-    public static String userName;
-    public static String email;
+    String userName;
+    String email;
 
     public UserAccount(String userName, String email) {
         this.userName = userName;

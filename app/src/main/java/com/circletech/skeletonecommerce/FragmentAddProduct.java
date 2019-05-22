@@ -1,6 +1,5 @@
 package com.circletech.skeletonecommerce;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,16 +12,19 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class FragmentAddProduct extends Fragment {
-
-    private static final int CODE_GET_REQUEST = 1024;
-    private static final int CODE_POST_REQUEST = 1025;
 
     EditText editTextProductName, editTextProductDescription, editTextProductPrice, editTextProductQuantity;
     Button btnAdd;
@@ -47,6 +49,7 @@ public class FragmentAddProduct extends Fragment {
                     Toast.makeText(getActivity(), "Please fill in all the details!", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    progressBar.setVisibility(View.VISIBLE);
                     addProduct(editTextProductName.getText().toString().trim(), editTextProductDescription.getText().toString().trim(), editTextProductPrice.getText().toString().trim(), editTextProductQuantity.getText().toString().trim());
                 }
             }
@@ -60,63 +63,44 @@ public class FragmentAddProduct extends Fragment {
         Objects.requireNonNull(getActivity()).setTitle("Add New Product");
     }
 
-    private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
-        String url;
-        HashMap<String, String> params;
-        int requestCode;
+    public void addProduct(final String productName, final String productDescription, final String productPrice, final String productQuantity) {
 
-        PerformNetworkRequest(String url, HashMap<String, String> params, int requestCode) {
-            this.url = url;
-            this.params = params;
-            this.requestCode = requestCode;
-        }
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, API.URL_ADD_PRODUCT, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponseObj = new JSONObject(response);
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            try {
-                JSONObject object = new JSONObject(s);
-                if (!object.getBoolean("error")) {
-                    Toast.makeText(getActivity(), object.getString("message"), Toast.LENGTH_SHORT).show();
+                    if (!jsonResponseObj.getBoolean("error")) {
+                        Toast.makeText(getActivity(), jsonResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(getContext(), jsonResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
+                    }
                 }
-                else {
-                    Toast.makeText(getActivity(), object.getString("message"), Toast.LENGTH_SHORT).show();
+                catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
+                progressBar.setVisibility(View.GONE);
             }
-            progressBar.setVisibility(View.INVISIBLE);
-        }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("productName", productName);
+                params.put("productDescription", productDescription);
+                params.put("productPrice", productPrice);
+                params.put("productQuantity", productQuantity);
+                return params;
+            }
+        };
 
-        @Override
-        protected String doInBackground(Void... voids) {
-            APIRequestHandler requestHandler = new APIRequestHandler();
-
-            if (requestCode == CODE_POST_REQUEST)
-                return requestHandler.sendPostRequest(url, params);
-
-            if (requestCode == CODE_GET_REQUEST)
-                return requestHandler.sendGetRequest(url);
-
-            return null;
-        }
-    }
-
-    public void addProduct(String productName, String productDescription, String productPrice, String productQuantity) {
-
-        HashMap<String, String> params = new HashMap<>();
-        params.put("productName", productName);
-        params.put("productDescription", productDescription);
-        params.put("productPrice", productPrice);
-        params.put("productQuantity", productQuantity);
-
-        FragmentAddProduct.PerformNetworkRequest request = new FragmentAddProduct.PerformNetworkRequest(API.URL_ADD_PRODUCT, params, CODE_POST_REQUEST);
-        request.execute();
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 }

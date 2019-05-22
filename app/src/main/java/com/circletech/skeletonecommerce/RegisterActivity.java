@@ -8,10 +8,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -50,54 +56,39 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    public void registerAccount(String userName, String email, String password) {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("userName", userName);
-        params.put("email", email);
-        params.put("password", password);
+    public void registerAccount(final String userName, final String email, final String password) {
 
-        RegisterActivity.PerformNetworkRequest request = new RegisterActivity.PerformNetworkRequest(API.URL_REGISTER_ACCOUNT, params, CODE_POST_REQUEST);
-        request.execute();
-    }
-
-    private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
-        String url;
-        HashMap<String, String> params;
-        int requestCode;
-
-        PerformNetworkRequest(String url, HashMap<String, String> params, int requestCode) {
-            this.url = url;
-            this.params = params;
-            this.requestCode = requestCode;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            try {
-                JSONObject object = new JSONObject(s);
-                if (!object.getBoolean("error")) {
-                    Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, API.URL_REGISTER_ACCOUNT, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponseObj = new JSONObject(response);
+                    if (!jsonResponseObj.getBoolean("error")) {
+                        Toast.makeText(getApplicationContext(), jsonResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        Toast.makeText(RegisterActivity.this, jsonResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                else {
-                    Toast.makeText(RegisterActivity.this, object.getString("message"), Toast.LENGTH_SHORT).show();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
-        }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(RegisterActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }) {
+          @Override
+          protected Map<String, String> getParams() {
+              Map<String, String> params = new HashMap<>();
+              params.put("userName", userName);
+              params.put("email", email);
+              params.put("password", password);
+              return params;
+          }
+        };
 
-        @Override
-        protected String doInBackground(Void... voids) {
-            APIRequestHandler requestHandler = new APIRequestHandler();
-
-            if (requestCode == CODE_POST_REQUEST)
-                return requestHandler.sendPostRequest(url, params);
-
-            if (requestCode == CODE_GET_REQUEST)
-                return requestHandler.sendGetRequest(url);
-
-            return null;
-        }
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
     }
 }

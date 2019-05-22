@@ -1,7 +1,6 @@
 package com.circletech.skeletonecommerce;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,15 +10,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
-
-    private static final int CODE_GET_REQUEST = 1024;
-    private static final int CODE_POST_REQUEST = 1025;
 
     Session userSession;
 
@@ -49,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Please fill in all the details", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    progressBar.setVisibility(View.VISIBLE);
                     loginAccount(editTextUserName.getText().toString().trim(), editTextPassword.getText().toString().trim());
                 }
             }
@@ -63,68 +66,45 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
-        String url;
-        HashMap<String, String> params;
-        int requestCode;
+    private void loginAccount(final String userName, final String password) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, API.URL_LOGIN_ACCOUNT, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponseObj = new JSONObject(response);
+                    if (!jsonResponseObj.getBoolean("error")) {
+                        Toast.makeText(getApplicationContext(), jsonResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
 
-        PerformNetworkRequest(String url, HashMap<String, String> params, int requestCode) {
-            this.url = url;
-            this.params = params;
-            this.requestCode = requestCode;
-        }
+                        JSONObject jsonAccountObj = jsonResponseObj.getJSONArray("account").getJSONObject(0);
+                        userSession.createLoginSession(jsonAccountObj.getString("userName"), jsonAccountObj.getString("email"));
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            try {
-                JSONObject object = new JSONObject(s);
-                if (!object.getBoolean("error")) {
-                    Toast.makeText(getApplicationContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
-
-                    JSONObject obj = object.getJSONArray("account").getJSONObject(0);
-                    userSession.createLoginSession(obj.getString("userName"), obj.getString("email"));
-
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(i);
-                    finish();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
+                    }
+                    else {
+                        Toast.makeText(LoginActivity.this, jsonResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                else {
-                    Toast.makeText(LoginActivity.this, object.getString("message"), Toast.LENGTH_SHORT).show();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+                progressBar.setVisibility(View.GONE);
             }
-            progressBar.setVisibility(View.INVISIBLE);
-        }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("userName", userName);
+                params.put("password", password);
+                return params;
+            }
+        };
 
-        @Override
-        protected String doInBackground(Void... voids) {
-            APIRequestHandler requestHandler = new APIRequestHandler();
-
-            if (requestCode == CODE_POST_REQUEST)
-                return requestHandler.sendPostRequest(url, params);
-
-            if (requestCode == CODE_GET_REQUEST)
-                return requestHandler.sendGetRequest(url);
-
-            return null;
-        }
-    }
-
-    private void loginAccount(String userName, String password) {
-
-        HashMap<String, String> params = new HashMap<>();
-        params.put("userName", userName);
-        params.put("password", password);
-
-        PerformNetworkRequest request = new PerformNetworkRequest(API.URL_LOGIN_ACCOUNT, params, CODE_POST_REQUEST);
-        request.execute();
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
     }
 }

@@ -1,7 +1,6 @@
 package com.circletech.skeletonecommerce;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,6 +10,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
@@ -18,11 +21,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class ProductInfoActivity extends AppCompatActivity {
-
-    private static final int CODE_GET_REQUEST = 1024;
-    private static final int CODE_POST_REQUEST = 1025;
 
     TextView textViewProductId, textViewProductName, textViewProductDescription, textViewProductPrice, textViewProductQuantity;
     ImageView imageViewProductImage;
@@ -53,67 +54,52 @@ public class ProductInfoActivity extends AppCompatActivity {
         getProductInfo(productId);
     }
 
-    private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
-        String url;
-        HashMap<String, String> params;
-        int requestCode;
+    public void getProductInfo(final String productId) {
 
-        PerformNetworkRequest(String url, HashMap<String, String> params, int requestCode) {
-            this.url = url;
-            this.params = params;
-            this.requestCode = requestCode;
-        }
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, API.URL_GET_PRODUCT_INFO, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponseObj = new JSONObject(response);
+                    if (!jsonResponseObj.getBoolean("error")) {
 
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            try {
-                JSONObject object = new JSONObject(s);
-                if (!object.getBoolean("error")) {
+                        JSONArray jsonProductArray = jsonResponseObj.getJSONArray("product");
+                        JSONObject jsonProductInfo = jsonProductArray.getJSONObject(0);
 
-                    JSONArray array = object.getJSONArray("product");
-                    JSONObject productInfo = array.getJSONObject(0);
+                        textViewProductId.setText(String.valueOf(jsonProductInfo.getInt("productId")));
+                        textViewProductName.setText(jsonProductInfo.getString("productName"));
+                        textViewProductDescription.setText(jsonProductInfo.getString("productDescription"));
+                        textViewProductPrice.setText(getApplication().getResources().getString(R.string.activity_productinfo_productprice, jsonProductInfo.getDouble("productPrice")));
+                        textViewProductQuantity.setText(getApplicationContext().getResources().getString(R.string.activity_productinfo_productquantity, jsonProductInfo.getInt("productQuantity")));
 
-                    textViewProductId.setText(String.valueOf(productInfo.getInt("productId")));
-                    textViewProductName.setText(productInfo.getString("productName"));
-                    textViewProductDescription.setText(productInfo.getString("productDescription"));
-                    textViewProductPrice.setText(getApplication().getResources().getString(R.string.activity_productinfo_productprice, productInfo.getDouble("productPrice")));
-                    textViewProductQuantity.setText(getApplicationContext().getResources().getString(R.string.activity_productinfo_productquantity, productInfo.getInt("productQuantity")));
-
-                    Glide.with(ProductInfoActivity.this)
-                            .load(productInfo.getString("productImage"))
-                            .into(imageViewProductImage);
-
-                    progressBar.setVisibility(View.GONE);
-                    relativeLayout.setVisibility(View.VISIBLE);
+                        Glide.with(ProductInfoActivity.this)
+                                .load(jsonProductInfo.getString("productImage"))
+                                .into(imageViewProductImage);
+                    }
+                    else {
+                        Toast.makeText(ProductInfoActivity.this, jsonResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                else {
-                    Toast.makeText(ProductInfoActivity.this, object.getString("message"), Toast.LENGTH_SHORT).show();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+                progressBar.setVisibility(View.GONE);
+                relativeLayout.setVisibility(View.VISIBLE);
             }
-        }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(ProductInfoActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("productId", productId);
+                return params;
+            }
+        };
 
-        @Override
-        protected String doInBackground(Void... voids) {
-            APIRequestHandler requestHandler = new APIRequestHandler();
-
-            if (requestCode == CODE_POST_REQUEST)
-                return requestHandler.sendPostRequest(url, params);
-
-            if (requestCode == CODE_GET_REQUEST)
-                return requestHandler.sendGetRequest(url);
-
-            return null;
-        }
-    }
-
-    public void getProductInfo(String productId) {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("productId", productId);
-
-        ProductInfoActivity.PerformNetworkRequest request = new ProductInfoActivity.PerformNetworkRequest(API.URL_GET_PRODUCT_INFO, params, CODE_POST_REQUEST);
-        request.execute();
+        VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
     }
 }

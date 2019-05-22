@@ -1,6 +1,5 @@
 package com.circletech.skeletonecommerce;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,19 +12,20 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
 public class FragmentListing extends Fragment {
-
-    private static final int CODE_GET_REQUEST = 1024;
-    private static final int CODE_POST_REQUEST = 1025;
 
     List<Product> productList;
 
@@ -53,70 +53,50 @@ public class FragmentListing extends Fragment {
         Objects.requireNonNull(getActivity()).setTitle("Home");
     }
 
-    private class PerformNetworkRequest extends AsyncTask<Void, Void, String> {
-        String url;
-        HashMap<String, String> params;
-        int requestCode;
-
-        PerformNetworkRequest(String url, HashMap<String, String> params, int requestCode) {
-            this.url = url;
-            this.params = params;
-            this.requestCode = requestCode;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            try {
-                JSONObject object = new JSONObject(s);
-                if (!object.getBoolean("error")) {
-                    //JSONArray array = new JSONArray(s);
-                    JSONArray array = object.getJSONArray("products");
-
-                    for (int i = 0; i < array.length(); i++) {
-
-                        JSONObject product = array.getJSONObject(i);
-
-                        productList.add(new Product(
-                                product.getInt("productId"),
-                                product.getString("productName"),
-                                product.getString("productDescription"),
-                                product.getInt("productQuantity"),
-                                product.getDouble("productPrice"),
-                                product.getString("productImage")
-                        ));
-                    }
-
-                    ProductAdapter productAdapter = new ProductAdapter(getActivity(), productList);
-                    recyclerView.setAdapter(productAdapter);
-
-                    progressBar.setVisibility(View.GONE);
-                    recyclerView.setVisibility(View.VISIBLE);
-                }
-                else {
-                    Toast.makeText(getActivity(), object.getString("message"), Toast.LENGTH_SHORT).show();
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            APIRequestHandler requestHandler = new APIRequestHandler();
-
-            if (requestCode == CODE_POST_REQUEST)
-                return requestHandler.sendPostRequest(url, params);
-
-            if (requestCode == CODE_GET_REQUEST)
-                return requestHandler.sendGetRequest(url);
-
-            return null;
-        }
-    }
-
     public void getProducts() {
-        FragmentListing.PerformNetworkRequest request = new FragmentListing.PerformNetworkRequest(API.URL_GET_PRODUCTS, null, CODE_GET_REQUEST);
-        request.execute();
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, API.URL_GET_PRODUCTS, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonResponseObj = new JSONObject(response);
+                    if (!jsonResponseObj.getBoolean("error")) {
+
+                        JSONArray jsonProductArray = jsonResponseObj.getJSONArray("products");
+
+                        for (int i = 0; i < jsonProductArray.length(); i++) {
+
+                            JSONObject jsonProductDetails = jsonProductArray.getJSONObject(i);
+
+                            productList.add(new Product(
+                                    jsonProductDetails.getInt("productId"),
+                                    jsonProductDetails.getString("productName"),
+                                    jsonProductDetails.getString("productDescription"),
+                                    jsonProductDetails.getInt("productQuantity"),
+                                    jsonProductDetails.getDouble("productPrice"),
+                                    jsonProductDetails.getString("productImage")
+                            ));
+                        }
+
+                        ProductAdapter productAdapter = new ProductAdapter(getActivity(), productList);
+                        recyclerView.setAdapter(productAdapter);
+                    }
+                    else {
+                        Toast.makeText(getActivity(), jsonResponseObj.getString("message"), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                progressBar.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.GONE);
+            }
+        });
+
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 }
